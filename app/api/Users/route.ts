@@ -9,7 +9,6 @@ export async function POST(req: any) {
 
         if (!userData.email || !userData.password) {
             return NextResponse.json({ message: "Mangler felt" }, { status: 400 })
-
         }
 
         const existingUser = await User.findOne({ email: userData.email }).lean().exec();

@@ -21,22 +21,17 @@ const ReplyDisplay = ({ postId }: Props) => {
       body: JSON.stringify({ postId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
-    console.log("running");
-    console.log(res);
     if (!res.ok) {
       const response = await res.json();
-      // console.log(response.message);
+      console.log(response.message);
     } else {
       const temp = await res.json();
-      // console.log(temp);
-      console.log(temp.data);
       setPost(temp.data);
       setwinReady(true);
     }
   };
 
   useEffect(() => {
-    console.log("i run");
     getPost();
   }, []);
 
@@ -68,7 +63,10 @@ const ReplyDisplay = ({ postId }: Props) => {
         <h3 className="font-bold">{post?.userName}</h3>
         {session?.user?.name === post?.userName ? (
           <div className=" flex gap-2">
-            <PencilIcon onClick={() => setToggle(!toggle)} className="h-4 w-4 text-orange-300 hover:cursor-pointer" />
+            <PencilIcon
+              onClick={() => setToggle(!toggle)}
+              className="h-4 w-4 text-orange-300 hover:cursor-pointer"
+            />
             <TrashIcon
               onClick={() => handleDelete()}
               className="h-4 w-4 text-red-500 hover:cursor-pointer"
@@ -78,9 +76,7 @@ const ReplyDisplay = ({ postId }: Props) => {
           <></>
         )}
       </div>
-          {toggle ?  <EditForm post={post!}/> :
-      <p>{post?.reply}</p>
-    }
+      {toggle ? <EditForm post={post!} /> : <p>{post?.reply}</p>}
     </div>
   );
 };

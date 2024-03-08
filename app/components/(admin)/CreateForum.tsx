@@ -3,22 +3,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Thread } from "../../../types/Thread";
 
-/*
-
-{
-        headline: String,
-        userName: String,
-        content: String,
-        replies: [
-          {
-            userName: String,
-            postDate: String,
-            content: String,
-          },
-        ],
-      }
-
-      */
 const CreateForum = () => {
   const router = useRouter();
   const [forum, setForum] = useState({

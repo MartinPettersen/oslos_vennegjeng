@@ -1,7 +1,6 @@
-'use client'
+"use client";
 import { Thread } from "@/types/Thread";
 import React, { useState } from "react";
-import ReplyContainer from "./ReplyContainer";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { PencilIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
@@ -25,10 +24,10 @@ const ThreadContent = ({ thread }: Props) => {
   });
 
   const handleDelete = async () => {
-    console.log("i del")
+    console.log("i del");
     const res = await fetch("/api/DeleteThread", {
       method: "POST",
-      body: JSON.stringify({ thread}),
+      body: JSON.stringify({ thread }),
       headers: new Headers({ "content-type": "application/json" }),
     });
 
@@ -47,7 +46,10 @@ const ThreadContent = ({ thread }: Props) => {
         <div className="">{thread!.replies.length}</div>
         {session?.user?.name === thread?.userName ? (
           <div className=" flex gap-2">
-            <PencilIcon onClick={() => setToggle(!toggle)} className="h-4 w-4 hover:cursor-pointer" />
+            <PencilIcon
+              onClick={() => setToggle(!toggle)}
+              className="h-4 w-4 hover:cursor-pointer"
+            />
             <TrashIcon
               onClick={() => handleDelete()}
               className="h-4 w-4 text-red-500 hover:cursor-pointer"
@@ -58,11 +60,11 @@ const ThreadContent = ({ thread }: Props) => {
         )}
       </div>
       <div className="text-orange-300">{thread!.userName}</div>
-      {toggle ? 
-      <EditThread thread={thread}/>  :
-    
-      <p className="text-orange-300">{thread!.content}</p>
-    }
+      {toggle ? (
+        <EditThread thread={thread} />
+      ) : (
+        <p className="text-orange-300">{thread!.content}</p>
+      )}
     </div>
   );
 };

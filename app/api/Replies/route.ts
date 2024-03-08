@@ -13,18 +13,12 @@ export async function POST(req: any) {
 
         if (!formData) {
             return NextResponse.json({ message: "Mangler informasjon" }, { status: 400 })
-
         }
 
         const existingThread = await Thread.findOne({ id: formData.threadId }).lean().exec() as any as ThreadT;
 
-        // if (existingForum) {
-        //     return NextResponse.json({ message: "Forum finnes allerede" }, { status: 409 })
-        // }
-        console.log("jeg kjører")
-        console.log(formData)
         await Post.create(formData)
-        await Thread.findOneAndUpdate({ id: formData.threadId }, { replies: [ formData.postId, ...existingThread!.replies] })
+        await Thread.findOneAndUpdate({ id: formData.threadId }, { replies: [formData.postId, ...existingThread!.replies] })
         return NextResponse.json({ message: "Innlegg opprettet" }, { status: 201 })
 
     } catch (error) {

@@ -23,23 +23,17 @@ const ForumDisplay = ({ forum }: Props) => {
       body: JSON.stringify({ forumLabel }),
       headers: new Headers({ "content-type": "application/json" }),
     });
-    console.log("running");
-    // console.log(res)
     if (!res.ok) {
       const response = await res.json();
-      // console.log(response.message);
+      console.log(response.message);
     } else {
       const temp = await res.json();
-      // console.log(temp);
-
-      console.log(temp.data);
       setThread(temp.data);
       setwinReady(true);
     }
   };
 
   useEffect(() => {
-    console.log("i run");
     getThread();
   }, []);
 
@@ -59,8 +53,10 @@ const ForumDisplay = ({ forum }: Props) => {
             <div>{thread?.headline}</div>
           </Link>
         ) : (
-          <div className="animate-pulse font-bold text-3xl text-orange-300 w-full items-center justify-center">Loading</div>
-          )}
+          <div className="animate-pulse font-bold text-3xl text-orange-300 w-full items-center justify-center">
+            Loading
+          </div>
+        )}
       </div>
     </div>
   );

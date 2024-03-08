@@ -15,14 +15,29 @@ const Navbar = async () => {
         <Logo />
         <div className="flex flex-col sm:flex-row gap-8 sm:gap-0 font-bold text-xl">
           <div>
-            <Link href="/" className=" hover:text-orange-500 hover:bg-slate-700 p-4">Hjem</Link>
+            <Link
+              href="/"
+              className=" hover:text-orange-500 hover:bg-slate-700 p-4"
+            >
+              Hjem
+            </Link>
           </div>
           <div>
-            <Link href="/Bruker" className=" hover:text-orange-500 hover:bg-slate-700 p-4">Min Side</Link>
+            <Link
+              href="/Bruker"
+              className=" hover:text-orange-500 hover:bg-slate-700 p-4"
+            >
+              Min Side
+            </Link>
           </div>
           {session?.user?.role === "admin" ? (
             <div>
-              <Link href="/AdminPage" className=" hover:text-orange-500 hover:bg-slate-700 p-4">Admin</Link>
+              <Link
+                href="/AdminPage"
+                className=" hover:text-orange-500 hover:bg-slate-700 p-4"
+              >
+                Admin
+              </Link>
             </div>
           ) : (
             <></>
@@ -30,16 +45,31 @@ const Navbar = async () => {
 
           {session ? (
             <div>
-              <Link href="/api/auth/signout?callbackUrl=/" className=" hover:text-orange-500 hover:bg-slate-700 p-4">Logg ut</Link>
+              <Link
+                href="/api/auth/signout?callbackUrl=/"
+                className=" hover:text-orange-500 hover:bg-slate-700 p-4"
+              >
+                Logg ut
+              </Link>
             </div>
           ) : (
             <>
               {" "}
               <div>
-                <Link href="/api/auth/signin" className=" hover:text-orange-500 hover:bg-slate-700 p-4">Login</Link>
+                <Link
+                  href="/api/auth/signin"
+                  className=" hover:text-orange-500 hover:bg-slate-700 p-4"
+                >
+                  Login
+                </Link>
               </div>{" "}
               <div>
-                <Link href="/CreateUser" className=" hover:text-orange-500 hover:bg-slate-700 p-4">Ny Bruker</Link>
+                <Link
+                  href="/CreateUser"
+                  className=" hover:text-orange-500 hover:bg-slate-700 p-4"
+                >
+                  Ny Bruker
+                </Link>
               </div>{" "}
             </>
           )}

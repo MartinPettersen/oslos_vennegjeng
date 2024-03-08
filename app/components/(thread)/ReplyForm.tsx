@@ -1,66 +1,63 @@
 "use client";
 import { Thread } from "@/types/Thread";
 import React, { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import { useSession } from 'next-auth/react'
+import { v4 as uuidv4 } from "uuid";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 type Props = {
   thread: Thread;
 };
 
 const ReplyForm = ({ thread }: Props) => {
+  const router = useRouter();
 
-    const router = useRouter();
+  const postId = uuidv4();
 
-    const postId = uuidv4();
-  
-    const {data: session}: any = useSession({
-      required: true,
-      onUnauthenticated() {
-          redirect("/api/auth/signin?callbackUrl=/Bruker");
-      }
-  })
+  const { data: session }: any = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/api/auth/signin?callbackUrl=/Bruker");
+    },
+  });
 
-    const [form, setForm] = useState({
-        postId: postId,
-        threadId: thread.id,
-        reply: "",
-        userName: session?.user?.name,
-      });
+  const [form, setForm] = useState({
+    postId: postId,
+    threadId: thread.id,
+    reply: "",
+    userName: session?.user?.name,
+  });
 
-      const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
+  const handleChange = (e: any) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-      const handleChange = (e: any) => {
-        const value = e.target.value;
-        const name = e.target.name;
-        setForm((prevState) => ({
-          ...prevState,
-          [name]: value,
-        }));
-      };
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setErrorMessage("");
 
+    const res = await fetch("/api/Posts", {
+      method: "POST",
+      body: JSON.stringify({ form }),
+      headers: new Headers({ "content-type": "application/json" }),
+    });
 
-      const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        setErrorMessage("");
-    
-        const res = await fetch("/api/Posts", {
-          method: "POST",
-          body: JSON.stringify({ form }),
-          headers: new Headers({ "content-type": "application/json" }),
-        });
-    
-        if (!res.ok) {
-          const response = await res.json();
-          setErrorMessage(response.message);
-        } else {
-          router.refresh();
-          router.push("/");
-        }
-      };
+    if (!res.ok) {
+      const response = await res.json();
+      setErrorMessage(response.message);
+    } else {
+      router.refresh();
+      router.push("/");
+    }
+  };
 
   return (
     <div className="z-[100] absolute w-[80%] sm:w-[50%]   rounded-sm drop-shadow-md flex items-center gap-4 flex-col p-4">

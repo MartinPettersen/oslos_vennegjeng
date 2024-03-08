@@ -1,5 +1,5 @@
-import React from 'react'
-import CreateThreadForm from '../../components/(createThread)/CreateThreadForm'
+import React from "react";
+import CreateThreadForm from "../../components/(createThread)/CreateThreadForm";
 
 type Props = {
   params: { forum: string };
@@ -8,10 +8,10 @@ type Props = {
 const page = ({ params }: Props) => {
   const forumLabel = params.forum;
   return (
-    <div className='w-full height-full p-4'>
-        <CreateThreadForm forumLabel={forumLabel}/>
+    <div className="w-full height-full p-4">
+      <CreateThreadForm forumLabel={forumLabel} />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

@@ -1,23 +1,20 @@
 import Forum from "@/app/(models)/Forum";
 import { NextResponse } from "next/server";
 
-export async function POST(req: any){
-    try{
+export async function POST(req: any) {
+    try {
 
         const body = await req.json()
         const forumData = body
 
-        
         const clearForums = await Forum.find({ status: forumData.status })
-        .lean()
-        .exec();
-        
-        // return NextResponse.json({data: duplicate.completed }, { status: 200 });
-        console.log("test getofums ")
-        return NextResponse.json({data: clearForums }, { status: 200 });
+            .lean()
+            .exec();
+
+        return NextResponse.json({ data: clearForums }, { status: 200 });
 
     } catch (error) {
         console.log(error)
-        return NextResponse.json({message: "Error", error}, { status: 500 });
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 }

@@ -11,23 +11,14 @@ export async function POST(req: any) {
         const body = await req.json()
         const postData = body.form
 
-        console.log(postData)
-
         if (!postData) {
             return NextResponse.json({ message: "Mangler informasjon" }, { status: 400 })
-
         }
 
         const existingThread = await Thread.findOne({ id: postData.threadId }).lean().exec() as any as ThreadT;
 
-        // if (existingForum) {
-        //     return NextResponse.json({ message: "Forum finnes allerede" }, { status: 409 })
-        // }
-        
         await Post.create(postData)
-        console.log(postData)
-        await Thread.findOneAndUpdate({ id: postData.threadId }, { replies: [ postData.postId, ...existingThread!.replies] })
-        console.log(postData)
+        await Thread.findOneAndUpdate({ id: postData.threadId }, { replies: [postData.postId, ...existingThread!.replies] })
 
         return NextResponse.json({ message: "Kommentar opprettet" }, { status: 201 })
 

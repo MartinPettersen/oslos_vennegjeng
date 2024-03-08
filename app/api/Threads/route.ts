@@ -11,21 +11,14 @@ export async function POST(req: any) {
         const forumLabel = body.forumLabel
         const threadId = body.id
 
-
-
         if (!forumLabel || !threadId) {
             return NextResponse.json({ message: "Mangler informasjon" }, { status: 400 })
-
         }
 
         const existingForum = await Forum.findOne({ label: forumLabel }).lean().exec() as any as ForumT;
 
-        // if (existingForum) {
-        //     return NextResponse.json({ message: "Forum finnes allerede" }, { status: 409 })
-        // }
-        
         await Thread.create(formData)
-        await Forum.findOneAndUpdate({ label: forumLabel }, { threads: [ formData.id, ...existingForum!.threads] })
+        await Forum.findOneAndUpdate({ label: forumLabel }, { threads: [formData.id, ...existingForum!.threads] })
         return NextResponse.json({ message: "Innlegg opprettet" }, { status: 201 })
 
     } catch (error) {

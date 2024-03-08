@@ -21,22 +21,17 @@ const page = ({ params }: Props) => {
       body: JSON.stringify({ forumLabel }),
       headers: new Headers({ "content-type": "application/json" }),
     });
-    // console.log("running");
-    // console.log(res)
     if (!res.ok) {
       const response = await res.json();
-      // console.log(response.message);
+      console.log(response.message);
     } else {
       const temp = await res.json();
-      // console.log(temp);
-      console.log(temp.data);
       setForum(temp.data);
       setwinReady(true);
     }
   };
 
   useEffect(() => {
-    console.log("i run");
     getForum();
   }, []);
 
@@ -54,14 +49,17 @@ const page = ({ params }: Props) => {
           Nytt Innlegg{" "}
         </Link>
         <div className="w-full flex flex-col gap-4 items-center justify-center">
-          {winReady
-            ? forum!.threads.map((thread: any) => (
-                <div className="bg-slate-500 hover:bg-slate-400 text-orange-300 flex flex-col p-4 w-[80%] sm:w-[40%]">
-                  <ThreadDisplay threadId={thread} />
-                  
-                </div>
-              ))
-            : <div className="animate-pulse  flex font-bold text-3xl text-orange-300 w-full items-center justify-center">Loading</div>}
+          {winReady ? (
+            forum!.threads.map((thread: any) => (
+              <div className="bg-slate-500 hover:bg-slate-400 text-orange-300 flex flex-col p-4 w-[80%] sm:w-[40%]">
+                <ThreadDisplay threadId={thread} />
+              </div>
+            ))
+          ) : (
+            <div className="animate-pulse  flex font-bold text-3xl text-orange-300 w-full items-center justify-center">
+              Loading
+            </div>
+          )}
         </div>
       </div>
     </div>

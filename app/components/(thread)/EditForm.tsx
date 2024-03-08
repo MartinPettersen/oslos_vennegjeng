@@ -1,7 +1,5 @@
 "use client";
-import { Thread } from "@/types/Thread";
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";

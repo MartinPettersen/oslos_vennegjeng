@@ -20,36 +20,33 @@ const page = ({ params }: Props) => {
       body: JSON.stringify({ threadId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
-    // console.log("running");
-    // console.log(res)
     if (!res.ok) {
       const response = await res.json();
-      // console.log(response.message);
+      console.log(response.message);
     } else {
       const temp = await res.json();
-      // console.log(temp);
-      console.log(temp.data);
       setThread(temp.data);
       setwinReady(true);
     }
   };
 
   useEffect(() => {
-    console.log("i run");
     getThread();
   }, []);
 
   return (
     <div className="flex justify-center w-screen items-center p-4">
       <div className="bg-slate-300  p-4 w-full sm:w-[60%] flex">
-        
         {winReady ? (
           <div className="w-full flex flex-col gap-2 sm:p-4 ">
             <ThreadContent thread={thread!} />
-            <Reply thread={thread!}/>
-            
+            <Reply thread={thread!} />
           </div>
-        ) : <div className="animate-pulse font-bold flex text-3xl text-orange-300 w-full items-center justify-center">Loading</div>}
+        ) : (
+          <div className="animate-pulse font-bold flex text-3xl text-orange-300 w-full items-center justify-center">
+            Loading
+          </div>
+        )}
       </div>
     </div>
   );

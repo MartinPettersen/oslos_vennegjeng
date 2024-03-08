@@ -2,42 +2,24 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Thread } from "../../../types/Thread";
-import { v4 as uuidv4 } from 'uuid';
-import { useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
+import { v4 as uuidv4 } from "uuid";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-/*
-
-{
-        headline: String,
-        userName: String,
-        content: String,
-        replies: [
-          {
-            userName: String,
-            postDate: String,
-            content: String,
-          },
-        ],
-      }
-
-      */
 type Props = {
-    forumLabel: string
-}
-const CreateThreadForm = ({forumLabel}: Props) => {
+  forumLabel: string;
+};
+const CreateThreadForm = ({ forumLabel }: Props) => {
   const router = useRouter();
 
   const id = uuidv4();
 
-  const {data: session}: any = useSession({
+  const { data: session }: any = useSession({
     required: true,
     onUnauthenticated() {
-        redirect("/api/auth/signin?callbackUrl=/Bruker");
-    }
-})
-
-
+      redirect("/api/auth/signin?callbackUrl=/Bruker");
+    },
+  });
 
   const [form, setForm] = useState({
     id: id,
@@ -45,7 +27,7 @@ const CreateThreadForm = ({forumLabel}: Props) => {
     userName: session?.user?.name,
     content: "",
     forumLabel: forumLabel,
-    replies: []
+    replies: [],
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -86,9 +68,7 @@ const CreateThreadForm = ({forumLabel}: Props) => {
         className="flex flex-col w-full sm:w-[22%] h-[40%] sm:h-[80%] bg-slate-600 p-6 text-orange-300 font-bold gap-4 sm:gap-4"
       >
         <h1 className="flex items-center justify-center">Opprett Innlegg</h1>
-        <h1>
-            Navn: {session?.user?.name}
-        </h1>
+        <h1>Navn: {session?.user?.name}</h1>
 
         <div className="flex justify-between">
           <label>Tittel</label>

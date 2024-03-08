@@ -5,11 +5,9 @@ export async function POST(req: any) {
     try {
         const body = await req.json()
         const forumData = body.forum
-        
 
         if (!forumData.label) {
             return NextResponse.json({ message: "Mangler forum navn" }, { status: 400 })
-
         }
 
         const existingForum = await Forum.findOne({ label: forumData.label }).lean().exec();

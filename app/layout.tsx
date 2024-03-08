@@ -18,16 +18,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <AuthProvider>
-      <body className={inter.className + "flex h-screen w-full mx-auto bg-gradient-radial from-[#55657b] to-[#222831]"}>
-        <Navbar />
+      <AuthProvider>
+        <body
+          className={
+            inter.className +
+            "flex h-screen w-full mx-auto bg-gradient-radial from-[#55657b] to-[#222831]"
+          }
+        >
+          <Navbar />
 
-        <div className="h-full sm:h-[90%] ">
-        {children}
-
-        </div>
-      </body>
-        </AuthProvider>
+          <div className="h-full sm:h-[90%] ">{children}</div>
+        </body>
+      </AuthProvider>
     </html>
   );
 }

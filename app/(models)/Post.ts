@@ -22,7 +22,7 @@ const postSchema = new Schema({
     threadId: String,
     reply: String,
     userName: String,
-    
+
 },
     {
         timestamps: true,

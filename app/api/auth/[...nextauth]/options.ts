@@ -38,19 +38,19 @@ export const options = {
             },
             async authorize(credentials) {
                 try {
-                    const foundUser: any = await User.findOne({email: credentials!.email}).lean().exec()
-                    
-                    if(foundUser){
+                    const foundUser: any = await User.findOne({ email: credentials!.email }).lean().exec()
+
+                    if (foundUser) {
                         const match = await bcrypt.compare(credentials!.password, foundUser.password);
-                     
-                        if(match) {
+
+                        if (match) {
                             delete foundUser.password;
 
                             foundUser["role"] = "uverifisert email";
 
                             return foundUser;
                         }
-                        
+
                     }
                 } catch (error) {
                     console.log(error)
@@ -60,11 +60,11 @@ export const options = {
         }),
     ],
     callbacks: {
-        async jwt({token, user}: any) {
+        async jwt({ token, user }: any) {
             if (user) token.role = user.role;
             return token;
         },
-        async session({session, token}: any) {
+        async session({ session, token }: any) {
             if (session?.user) {
                 session.user.role = token.role;
             }

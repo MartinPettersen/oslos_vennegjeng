@@ -5,7 +5,6 @@ export async function POST(req: any) {
     try {
         const body = await req.json()
         const threadId = body.threadId
-        
 
         if (!threadId) {
             return NextResponse.json({ message: "Mangler Tråd" }, { status: 400 })
@@ -13,11 +12,6 @@ export async function POST(req: any) {
 
         const existingThread = await Thread.findOne({ id: threadId }).lean().exec();
 
-        // if (!existingForum) {
-        //     return NextResponse.json({ message: "Forum finnes ikke" }, { status: 404 })
-        // }
-
-        // await Forum.create(forumData)
         return NextResponse.json({ data: existingThread }, { status: 201 })
 
     } catch (error) {

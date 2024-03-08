@@ -13,7 +13,10 @@ const ForumSelector = ({ forums }: Props) => {
     <div>
       {toggled ? (
         <>
-          <div className="z-1 absolute left-0 top-0 w-screen h-screen" onClick={() => setToggled(!toggled)}></div>
+          <div
+            className="z-1 absolute left-0 top-0 w-screen h-screen"
+            onClick={() => setToggled(!toggled)}
+          ></div>
           <div className="z-10 absolute  flex flex-col border-2 border-slate-700 bg-slate-700 bg-opacity-30 backdrop-blur-md">
             {forums.map((forum) => (
               <Link
@@ -25,15 +28,13 @@ const ForumSelector = ({ forums }: Props) => {
             ))}
           </div>
         </>
-      ) : (
-        null
-      )}
-        <div
-          className=" bg-slate-900 font-bold p-4 rounded bg-opacity-30 hover:bg-opacity-50 backdrop-blur-md text-orange-300 hover:text-orange-400 cursor-pointer"
-          onClick={() => setToggled(!toggled)}
-        >
-          Velg Forum
-        </div>
+      ) : null}
+      <div
+        className=" bg-slate-900 font-bold p-4 rounded bg-opacity-30 hover:bg-opacity-50 backdrop-blur-md text-orange-300 hover:text-orange-400 cursor-pointer"
+        onClick={() => setToggled(!toggled)}
+      >
+        Velg Forum
+      </div>
     </div>
   );
 };
