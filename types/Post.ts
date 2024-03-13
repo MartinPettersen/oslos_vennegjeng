@@ -3,4 +3,6 @@ export type Post = {
     threadId: String,
     reply: String,
     userName: String,
+    createdAt: String,
+    updatedAt: String,
 }

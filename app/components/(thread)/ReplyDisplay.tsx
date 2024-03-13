@@ -43,7 +43,6 @@ const ReplyDisplay = ({ postId }: Props) => {
   });
 
   const handleDelete = async () => {
-    console.log("i del");
     const threadId = post?.threadId;
     const res = await fetch("/api/DeletePost", {
       method: "POST",
@@ -61,6 +60,7 @@ const ReplyDisplay = ({ postId }: Props) => {
     <div className="bg-slate-500 flex w-[100%] p-4 flex-col text-orange-300 border-2 border-slate-200">
       <div className="flex justify-between items-center">
         <h3 className="font-bold">{post?.userName}</h3>
+
         {session?.user?.name === post?.userName ? (
           <div className=" flex gap-2">
             <PencilIcon
@@ -76,7 +76,12 @@ const ReplyDisplay = ({ postId }: Props) => {
           <></>
         )}
       </div>
-      {toggle ? <EditForm post={post!} /> : <p>{post?.reply}</p>}
+      <div className="flex flex-row justify-between">
+        {toggle ? <EditForm post={post!} /> : <p>{post?.reply}</p>}
+        <h3 className="font-bold">
+          {post?.createdAt === post?.updatedAt ? "" : "[Edited]"}
+        </h3>
+      </div>
     </div>
   );
 };

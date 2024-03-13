@@ -42,7 +42,7 @@ const ThreadContent = ({ thread }: Props) => {
   return (
     <div className="flex flex-col bg-slate-600 justify-center gap-4 p-4">
       <div className="flex justify-between items-center text-orange-300 ">
-        <h1 className="font-bold text-xl">{thread!.headline}</h1>
+        <h1 className="font-bold text-xl ">{thread!.headline}</h1>
         <div className="">{thread!.replies.length}</div>
         {session?.user?.name === thread?.userName ? (
           <div className=" flex gap-2">
@@ -59,6 +59,7 @@ const ThreadContent = ({ thread }: Props) => {
           <></>
         )}
       </div>
+      
       <div className="text-orange-300">{thread!.userName}</div>
       {toggle ? (
         <EditThread thread={thread} />
