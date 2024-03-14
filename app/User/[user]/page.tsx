@@ -37,8 +37,28 @@ const page = ({ params }: Props) => {
     }
   };
 
+  const getUserPosts = async () => {
+    console.log("i run");
+    const res = await fetch("/api/GetUserPosts", {
+      method: "POST",
+      body: JSON.stringify({ userName }),
+      headers: new Headers({ "content-type": "application/json" }),
+    });
+    if (!res.ok) {
+      const response = await res.json();
+      console.log(response.message);
+    } else {
+      const temp = await res.json();
+      setPosts(temp.data);
+      console.log(temp.data);
+      setwinReady(true);
+    }
+  };
+
   useEffect(() => {
     getUserThreads();
+    getUserPosts();
+
   }, []);
 
   return (
@@ -72,25 +92,31 @@ const page = ({ params }: Props) => {
           </div>
         </div>
       </div>
-      <div className=" w-full h-full flex  items-end justify-center">
+          {winReady ? (
+      <div className=" w-[90%] h-[90%] flex   items-end justify-center  overflow-y-auto no-scrollbar overflow-hidden sm:hover:overflow-y-auto ">
         {!kommentarer ? (
-          <div className=" w-full h-full flex flex-col gap-4 items-center justify-center">
-            {winReady ? (
-              threads!.map((thread: any) => (
+          <div className=" w-full h-full flex flex-col gap-4 items-center justify-center overflow-y-auto no-scrollbar">
+              {threads!.map((thread: any) => (
                 <div className="bg-slate-500 hover:bg-slate-400 text-orange-300 flex flex-col p-4 w-[80%] sm:w-[40%]">
                   <ThreadDisplay threadId={thread.id} />
                 </div>
-              ))
-            ) : (
-              <div className="animate-pulse  flex font-bold text-3xl text-orange-300 w-full items-center justify-center">
-                Loading
-              </div>
-            )}
+              ))}
+            
           </div>
         ) : (
-          <div className="">k</div>
+          <div className="w-full sm:w-[40%] h-[90%] flex flex-col gap-4 items-center justify-start  overflow-y-auto no-scrollbar overflow-hidden sm:hover:overflow-y-auto  ">
+            {posts?.map((post) => (
+              <ReplyDisplay postId={post.postId} />
+            ))}
+          </div>
         )}
       </div>
+) : (
+    <div className="animate-pulse  flex font-bold text-3xl text-orange-300 w-full items-center justify-center">
+      Loading
+    </div>
+  )}
+      
     </div>
   );
 };
