@@ -6,6 +6,7 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 import { PencilIcon } from "@heroicons/react/20/solid";
 import EditForm from "./EditForm";
 import PostShare from "./PostShare";
+import UserNameLink from "./UserNameLink";
 
 type Props = {
   postId: String;
@@ -60,8 +61,7 @@ const ReplyDisplay = ({ postId }: Props) => {
   return (
     <div className="bg-slate-500 flex w-[100%] p-4 flex-col gap-4 text-orange-300 border-2 border-slate-200">
       <div className="flex justify-between items-center ">
-        <h3 className="font-bold">{post?.userName}</h3>
-
+        <UserNameLink userName={post?.userName}/>
         {session?.user?.name === post?.userName ? (
           <div className=" flex gap-2">
             <PencilIcon
