@@ -58,7 +58,6 @@ const page = ({ params }: Props) => {
   useEffect(() => {
     getUserThreads();
     getUserPosts();
-
   }, []);
 
   return (
@@ -92,31 +91,29 @@ const page = ({ params }: Props) => {
           </div>
         </div>
       </div>
-          {winReady ? (
-      <div className=" w-[90%] h-[90%] flex   items-end justify-center  overflow-y-auto no-scrollbar overflow-hidden sm:hover:overflow-y-auto ">
-        {!kommentarer ? (
-          <div className=" w-full h-full flex flex-col gap-4 items-center justify-center overflow-y-auto no-scrollbar">
+      {winReady ? (
+        <div className=" w-[90%] h-[90%] flex   items-end justify-center  overflow-y-auto no-scrollbar overflow-hidden sm:hover:overflow-y-auto ">
+          {!kommentarer ? (
+            <div className=" w-full h-full flex flex-col gap-4 items-center justify-center overflow-y-auto no-scrollbar">
               {threads!.map((thread: any) => (
                 <div className="bg-slate-500 hover:bg-slate-400 text-orange-300 flex flex-col p-4 w-[80%] sm:w-[40%]">
                   <ThreadDisplay threadId={thread.id} />
                 </div>
               ))}
-            
-          </div>
-        ) : (
-          <div className="w-full sm:w-[40%] h-[90%] flex flex-col gap-4 items-center justify-start  overflow-y-auto no-scrollbar overflow-hidden sm:hover:overflow-y-auto  ">
-            {posts?.map((post) => (
-              <ReplyDisplay postId={post.postId} />
-            ))}
-          </div>
-        )}
-      </div>
-) : (
-    <div className="animate-pulse  flex font-bold text-3xl text-orange-300 w-full items-center justify-center">
-      Loading
-    </div>
-  )}
-      
+            </div>
+          ) : (
+            <div className="w-full sm:w-[40%] h-[90%] flex flex-col gap-4 items-center justify-start  overflow-y-auto no-scrollbar overflow-hidden sm:hover:overflow-y-auto  ">
+              {posts?.map((post) => (
+                <ReplyDisplay postId={post.postId} />
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="animate-pulse  flex font-bold text-3xl text-orange-300 w-full items-center justify-center">
+          Loading
+        </div>
+      )}
     </div>
   );
 };

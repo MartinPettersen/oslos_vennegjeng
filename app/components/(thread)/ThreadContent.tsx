@@ -6,6 +6,7 @@ import { PencilIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import EditThread from "./EditThread";
+import UserNameLink from "./UserNameLink";
 
 type Props = {
   thread: Thread;
@@ -60,7 +61,7 @@ const ThreadContent = ({ thread }: Props) => {
         )}
       </div>
       
-      <div className="text-orange-300">{thread!.userName}</div>
+      <UserNameLink userName={thread!.userName} />
       {toggle ? (
         <EditThread thread={thread} />
       ) : (
