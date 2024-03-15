@@ -4,9 +4,12 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { PencilIcon } from "@heroicons/react/20/solid";
+import { FlagIcon } from "@heroicons/react/20/solid";
+
 import EditForm from "./EditForm";
 import PostShare from "./PostShare";
 import UserNameLink from "./UserNameLink";
+import ReportForm from "./ReportForm";
 
 type Props = {
   postId: String;
@@ -16,6 +19,7 @@ const ReplyDisplay = ({ postId }: Props) => {
   const [post, setPost] = useState<Post>();
   const [winReady, setwinReady] = useState(false);
   const [toggle, setToggle] = useState(false);
+
 
   const getPost = async () => {
     const res = await fetch("/api/GetPost", {
@@ -61,21 +65,29 @@ const ReplyDisplay = ({ postId }: Props) => {
   return (
     <div className="bg-slate-500 flex w-[100%] p-4 flex-col gap-4 text-orange-300 border-2 border-slate-200">
       <div className="flex justify-between items-center ">
-        <UserNameLink userName={post?.userName}/>
-        {session?.user?.name === post?.userName ? (
-          <div className=" flex gap-2">
-            <PencilIcon
-              onClick={() => setToggle(!toggle)}
-              className="h-4 w-4 text-orange-300 hover:cursor-pointer"
-            />
-            <TrashIcon
-              onClick={() => handleDelete()}
-              className="h-4 w-4 text-red-500 hover:cursor-pointer"
-            />
-          </div>
-        ) : (
-          <></>
-        )}
+        <UserNameLink userName={post?.userName} />
+
+        <div className=" flex gap-2">
+          {winReady ?
+          
+          <ReportForm subjectType="post" subjectId={post!.postId}/>
+          : <></>
+        }
+          {session?.user?.name === post?.userName ? (
+            <>
+              <PencilIcon
+                onClick={() => setToggle(!toggle)}
+                className="h-4 w-4 text-orange-300 hover:cursor-pointer"
+              />
+              <TrashIcon
+                onClick={() => handleDelete()}
+                className="h-4 w-4 text-red-500 hover:cursor-pointer"
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <div className="flex flex-row justify-between">
         {toggle ? <EditForm post={post!} /> : <p>{post?.reply}</p>}
@@ -83,9 +95,9 @@ const ReplyDisplay = ({ postId }: Props) => {
           {post?.createdAt === post?.updatedAt ? "" : "[Edited]"}
         </h3>
       </div>
-        <div>
-          <PostShare postId={postId} />
-        </div>
+      <div>
+        <PostShare postId={postId} />
+      </div>
     </div>
   );
 };
