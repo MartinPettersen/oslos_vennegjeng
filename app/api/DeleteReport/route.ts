@@ -14,7 +14,6 @@ export async function POST(req: any) {
 
         const existingReport = await Report.findOneAndDelete({ reportId: reportId }).lean().exec();
 
-
         return NextResponse.json({ data: existingReport }, { status: 201 })
 
     } catch (error) {

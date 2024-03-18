@@ -19,7 +19,9 @@ const page = () => {
   const [post, setPost] = useState<Post>();
   const [thread, setThread] = useState<Post>();
 
-  const getPost = async (postId: String) => {
+  const getPost = async (report: Report) => {
+
+    const postId = report.subjectId
     const res = await fetch("/api/GetPost", {
       method: "POST",
       body: JSON.stringify({ postId }),
@@ -31,8 +33,9 @@ const page = () => {
     } else {
       const temp = await res.json();
       setPost(temp.data);
+      deletePost(report, temp.data);
+
       setwinReady(true);
-      deletePost(temp.data);
 
     }
   };
@@ -87,7 +90,7 @@ const page = () => {
     }
   };
 
-  const deletePost = async (post: Post) => {
+  const deletePost = async (report: Report, post: Post) => {
     const threadId = post!.threadId;
     const postId = post!.postId
     const res = await fetch("/api/DeletePost", {
@@ -100,6 +103,7 @@ const page = () => {
       const response = await res.json();
       console.log(response)
     } else {
+      deleteReport(report)
     }
   };
 
@@ -121,8 +125,8 @@ const page = () => {
 
   const handleDelete = async (report: Report) => {
     if (report.subjectType === "post") {
-      getPost(report.subjectId);
-      deleteReport(report)
+      getPost(report);
+
     } else {
       console.log("its a thread")
 
