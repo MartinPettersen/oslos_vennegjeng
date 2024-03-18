@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import Thread from '@/app/(models)/Thread';
 import Post from "@/app/(models)/Post";
 import Forum from '@/app/(models)/Forum';
+// import Thread from "@/app/(models)/Thread";
+
 import { ThreadT } from "@/types/Thread";
 
 type ForumT = {
@@ -32,6 +34,9 @@ export async function POST(req: any) {
         }
 
         await Forum.findOneAndUpdate({ label: thread.forumLabel }, { threads: existingForum!.threads })
+
+        await Thread.findOneAndDelete({ id: thread.id }).lean().exec();
+
 
         return NextResponse.json({ data: "deleted" }, { status: 201 })
 
