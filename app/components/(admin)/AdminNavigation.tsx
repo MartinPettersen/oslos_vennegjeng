@@ -16,6 +16,9 @@ const Navbar = async () => {
         <div>
           <Link href="/AdminPage">Admin</Link>
         </div>
+        <div>
+          <Link href="/Reports">Rapporter</Link>
+        </div>
       </nav>
     </div>
   );

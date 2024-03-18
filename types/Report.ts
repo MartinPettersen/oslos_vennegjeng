@@ -1,4 +1,4 @@
-export type Post = {
+export type Report = {
     reportId: String,
     subjectType: String,
     subjectId: String,

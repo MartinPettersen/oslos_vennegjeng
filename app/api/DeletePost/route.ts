@@ -15,6 +15,8 @@ export async function POST(req: any) {
         const postId = body.postId
         const threadId = body.threadId
 
+        console.log(body)
+
         if (!postId || !threadId) {
             return NextResponse.json({ message: "Mangler Post informasjon" }, { status: 400 })
         }
