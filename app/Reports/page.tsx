@@ -2,6 +2,7 @@
 
 import { Post } from "@/types/Post";
 import { Report } from "@/types/Report";
+import { Thread } from "@/types/Thread";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { EyeIcon } from "@heroicons/react/20/solid";
@@ -73,11 +74,12 @@ const page = () => {
     } else {
       const temp = await res.json();
       setThread(temp.data);
+      deleteThread(report, temp.data);
       setwinReady(true);
     }
   };
 
-  const deleteThread = async () => {
+  const deleteThread = async (report: Report, thread: Thread) => {
     const res = await fetch("/api/DeleteThread", {
       method: "POST",
       body: JSON.stringify({ thread }),
@@ -87,6 +89,7 @@ const page = () => {
     if (!res.ok) {
       const response = await res.json();
     } else {
+      deleteReport(report)
     }
   };
 
@@ -131,7 +134,7 @@ const page = () => {
       console.log("its a thread")
 
       getThread(report);
-      // deleteThread();
+      // 
     }
   };
 
