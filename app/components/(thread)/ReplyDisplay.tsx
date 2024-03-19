@@ -10,6 +10,7 @@ import EditForm from "./EditForm";
 import PostShare from "./PostShare";
 import UserNameLink from "./UserNameLink";
 import ReportForm from "./ReportForm";
+import TimeStamp from "./TimeStamp";
 
 type Props = {
   postId: String;
@@ -95,8 +96,9 @@ const ReplyDisplay = ({ postId }: Props) => {
           {post?.createdAt === post?.updatedAt ? "" : "[Edited]"}
         </h3>
       </div>
-      <div>
+      <div className="flex justify-between">
         <PostShare postId={postId} />
+        <TimeStamp time={post!.createdAt} />
       </div>
     </div>
   );
