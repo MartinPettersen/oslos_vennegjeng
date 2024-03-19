@@ -20,7 +20,7 @@ const ReportForm = ({subjectId, subjectType}: Props) => {
   const { data: session }: any = useSession({
     required: true,
     onUnauthenticated() {
-      redirect("/api/auth/signin?callbackUrl=/Bruker");
+      // redirect("/api/auth/signin?callbackUrl=/Bruker");
 
     },
   });

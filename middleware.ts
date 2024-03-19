@@ -24,4 +24,4 @@ export default withAuth(
     }
 );
 
-export const config = {matcher: ["/AdminPage", "/CreateForum"]}
+export const config = {matcher: ["/AdminPage", "/CreateForum", "/Reports"]}
