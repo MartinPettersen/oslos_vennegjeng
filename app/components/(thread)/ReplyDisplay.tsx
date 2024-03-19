@@ -11,6 +11,7 @@ import PostShare from "./PostShare";
 import UserNameLink from "./UserNameLink";
 import ReportForm from "./ReportForm";
 import TimeStamp from "./TimeStamp";
+import ReplyForm from "./ReplyForm";
 
 type Props = {
   postId: String;
@@ -20,6 +21,7 @@ const ReplyDisplay = ({ postId }: Props) => {
   const [post, setPost] = useState<Post>();
   const [winReady, setwinReady] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [toggleReply, setToggleReply] = useState(false);
 
   const getPost = async () => {
     const res = await fetch("/api/GetPost", {
@@ -96,9 +98,29 @@ const ReplyDisplay = ({ postId }: Props) => {
         </h3>
       </div>
       <div className="flex justify-between">
-        <PostShare postId={postId} />
-        {winReady ? (
-        <TimeStamp time={post!.createdAt} /> ) : <></>}
+        <div className="flex w-1/2 gap-8">
+          <PostShare postId={postId} />
+          {toggleReply ? (
+            <>
+              <div
+                className="w-full h-full fixed top-0 left-0 z-10 "
+                onClick={() => setToggleReply(!toggleReply)}
+              ></div>
+
+              <ReplyForm parentId={post!.postId} />
+            </>
+          ) : (
+            <div className="">
+              <div
+                onClick={() => setToggleReply(!toggleReply)}
+                className="hover:cursor-pointer font-bold text-lg  text-orange-300 hover:text-orange-400  flex items-center justify-center w-[15%]"
+              >
+                Svar
+              </div>
+            </div>
+          )}
+        </div>
+        {winReady ? <TimeStamp time={post!.createdAt} /> : <></>}
       </div>
     </div>
   );

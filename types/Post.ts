@@ -5,4 +5,5 @@ export type Post = {
     userName: String,
     createdAt: String,
     updatedAt: String,
+    children: String[],
 }

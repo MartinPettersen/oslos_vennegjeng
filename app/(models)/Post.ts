@@ -22,6 +22,7 @@ const postSchema = new Schema({
     parentId: String,
     reply: String,
     userName: String,
+    children: Array,
 
 },
     {

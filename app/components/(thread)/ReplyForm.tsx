@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 
 type Props = {
-  thread: Thread;
+  parentId: String;
 };
 
-const ReplyForm = ({ thread }: Props) => {
+const ReplyForm = ({ parentId }: Props) => {
   const router = useRouter();
 
   const postId = uuidv4();
@@ -24,7 +24,7 @@ const ReplyForm = ({ thread }: Props) => {
 
   const [form, setForm] = useState({
     postId: postId,
-    parentId: thread.id,
+    parentId: parentId,
     reply: "",
     userName: session?.user?.name,
   });
