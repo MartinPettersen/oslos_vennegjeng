@@ -21,7 +21,7 @@ const Reply = ({ thread }: Props) => {
             onClick={() => setToggle(!toggle)}
           ></div>
 
-          <ReplyForm parentId={thread.id} />
+          <ReplyForm parentId={thread.id} parentType={"thread"} />
         </>
       ) : (
         <div className="flex flex-row gap-2">

@@ -6,4 +6,5 @@ export type Post = {
     createdAt: String,
     updatedAt: String,
     children: String[],
+    
 }

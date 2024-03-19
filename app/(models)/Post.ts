@@ -2,13 +2,8 @@ import mongoose, { Schema } from "mongoose"
 
 mongoose.connect(process.env.MONGODB_URI!);
 mongoose.Promise = global.Promise
+import { Post } from "@/types/Post";
 
-type Post = {
-    postId: String,
-    userName: String,
-    postDate: String,
-    content: String,
-}
 
 type Thread = {
     headline: String,
@@ -23,6 +18,7 @@ const postSchema = new Schema({
     reply: String,
     userName: String,
     children: Array,
+    
 
 },
     {

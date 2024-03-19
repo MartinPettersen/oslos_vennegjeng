@@ -65,62 +65,75 @@ const ReplyDisplay = ({ postId }: Props) => {
   };
 
   return (
-    <div className="bg-slate-500 flex w-[100%] p-4 flex-col gap-4 text-orange-300 border-2 border-slate-200">
-      <div className="flex justify-between items-center ">
-        <UserNameLink userName={post?.userName} />
+    <div className="w-full h-full">
+      <div className="bg-slate-500 flex w-[100%] p-4 flex-col gap-4 text-orange-300 border-2 border-slate-200">
+        <div className="flex justify-between items-center ">
+          <UserNameLink userName={post?.userName} />
 
-        <div className=" flex gap-2">
-          {winReady ? (
-            <ReportForm subjectType="post" subjectId={post!.postId} />
-          ) : (
-            <></>
-          )}
-          {session?.user?.name === post?.userName ? (
-            <>
-              <PencilIcon
-                onClick={() => setToggle(!toggle)}
-                className="h-4 w-4 text-orange-300 hover:cursor-pointer"
-              />
-              <TrashIcon
-                onClick={() => handleDelete()}
-                className="h-4 w-4 text-red-500 hover:cursor-pointer"
-              />
-            </>
-          ) : (
-            <></>
-          )}
+          <div className=" flex gap-2">
+            {winReady ? (
+              <ReportForm subjectType="post" subjectId={post!.postId} />
+            ) : (
+              <></>
+            )}
+            {session?.user?.name === post?.userName ? (
+              <>
+                <PencilIcon
+                  onClick={() => setToggle(!toggle)}
+                  className="h-4 w-4 text-orange-300 hover:cursor-pointer"
+                />
+                <TrashIcon
+                  onClick={() => handleDelete()}
+                  className="h-4 w-4 text-red-500 hover:cursor-pointer"
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="flex flex-row justify-between">
-        {toggle ? <EditForm post={post!} /> : <p>{post?.reply}</p>}
-        <h3 className="font-bold">
-          {post?.createdAt === post?.updatedAt ? "" : "[Edited]"}
-        </h3>
-      </div>
-      <div className="flex justify-between">
-        <div className="flex w-1/2 gap-8">
-          <PostShare postId={postId} />
-          {toggleReply ? (
-            <>
-              <div
-                className="w-full h-full fixed top-0 left-0 z-10 "
-                onClick={() => setToggleReply(!toggleReply)}
-              ></div>
+        <div className="flex flex-row justify-between">
+          {toggle ? <EditForm post={post!} /> : <p>{post?.reply}</p>}
+          <h3 className="font-bold">
+            {post?.createdAt === post?.updatedAt ? "" : "[Edited]"}
+          </h3>
+        </div>
+        <div className="flex justify-between">
+          <div className="flex w-1/2 gap-8">
+            <PostShare postId={postId} />
+            {toggleReply ? (
+              <>
+                <div
+                  className="w-full h-full fixed top-0 left-0 z-10 "
+                  onClick={() => setToggleReply(!toggleReply)}
+                ></div>
 
-              <ReplyForm parentId={post!.postId} />
-            </>
-          ) : (
-            <div className="">
-              <div
-                onClick={() => setToggleReply(!toggleReply)}
-                className="hover:cursor-pointer font-bold text-lg  text-orange-300 hover:text-orange-400  flex items-center justify-center w-[15%]"
-              >
-                Svar
+                <ReplyForm parentId={post!.postId} parentType={"post"}/>
+              </>
+            ) : (
+              <div className="">
+                <div
+                  onClick={() => setToggleReply(!toggleReply)}
+                  className="hover:cursor-pointer font-bold text-lg  text-orange-300 hover:text-orange-400  flex items-center justify-center w-[15%]"
+                >
+                  Svar
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+          {winReady ? <TimeStamp time={post!.createdAt} /> : <></>}
         </div>
-        {winReady ? <TimeStamp time={post!.createdAt} /> : <></>}
+      </div>
+      <div className="flex w-full flex-row gap-1 pl-2 border-l-2 border-slate-600">
+        {post?.children ? (
+          <div className="flex flex-col w-full">
+            {post?.children.map((childId) => (
+              <ReplyDisplay postId={childId} />
+
+            ))}
+          </div>
+        ):<></>}
+
       </div>
     </div>
   );

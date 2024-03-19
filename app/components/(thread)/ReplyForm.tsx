@@ -8,11 +8,12 @@ import { redirect } from "next/navigation";
 
 type Props = {
   parentId: String;
+  parentType: String,
 };
 
-const ReplyForm = ({ parentId }: Props) => {
+const ReplyForm = ({ parentId, parentType }: Props) => {
   const router = useRouter();
-
+     
   const postId = uuidv4();
 
   const { data: session }: any = useSession({
@@ -46,7 +47,7 @@ const ReplyForm = ({ parentId }: Props) => {
 
     const res = await fetch("/api/Posts", {
       method: "POST",
-      body: JSON.stringify({ form }),
+      body: JSON.stringify({ form, parentType }),
       headers: new Headers({ "content-type": "application/json" }),
     });
 
