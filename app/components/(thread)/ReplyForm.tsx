@@ -24,7 +24,7 @@ const ReplyForm = ({ thread }: Props) => {
 
   const [form, setForm] = useState({
     postId: postId,
-    threadId: thread.id,
+    parentId: thread.id,
     reply: "",
     userName: session?.user?.name,
   });

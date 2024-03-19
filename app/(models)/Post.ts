@@ -19,7 +19,7 @@ type Thread = {
 
 const postSchema = new Schema({
     postId: String,
-    threadId: String,
+    parentId: String,
     reply: String,
     userName: String,
 

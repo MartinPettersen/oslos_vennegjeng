@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise
 
 const replySchema = new Schema({
     postId: String,
-    threadId: String,
+    parentId: String,
     reply: String,
     userName: String,
 },

@@ -13,24 +13,24 @@ export async function POST(req: any) {
     try {
         const body = await req.json()
         const postId = body.postId
-        const threadId = body.threadId
+        const parentId = body.parentId
 
         console.log(body)
 
-        if (!postId || !threadId) {
+        if (!postId || !parentId) {
             return NextResponse.json({ message: "Mangler Post informasjon" }, { status: 400 })
         }
 
         const existingPost = await Post.findOneAndDelete({ postId: postId }).lean().exec();
 
-        let existingThread = await Thread.findOne({ id: threadId }).lean().exec() as any as ThreadT;
+        let existingThread = await Thread.findOne({ id: parentId }).lean().exec() as any as ThreadT;
 
         const index = existingThread!.replies.indexOf(postId);
         if (index > -1) {
             existingThread!.replies.splice(index, 1);
         }
 
-        await Thread.findOneAndUpdate({ id: threadId }, { replies: existingThread!.replies })
+        await Thread.findOneAndUpdate({ id: parentId }, { replies: existingThread!.replies })
 
         return NextResponse.json({ data: existingPost }, { status: 201 })
 

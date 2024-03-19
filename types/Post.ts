@@ -1,6 +1,6 @@
 export type Post = {
     postId: String,
-    threadId: String,
+    parentId: String,
     reply: String,
     userName: String,
     createdAt: String,

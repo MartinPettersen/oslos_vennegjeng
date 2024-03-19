@@ -9,7 +9,7 @@ type Props = {
 };
 
 const page = ({ params }: Props) => {
-  const threadId = params.thread;
+  const parentId = params.thread;
 
   const [thread, setThread] = useState<Thread>();
   const [winReady, setwinReady] = useState(false);
@@ -17,7 +17,7 @@ const page = ({ params }: Props) => {
   const getThread = async () => {
     const res = await fetch("/api/GetThread", {
       method: "POST",
-      body: JSON.stringify({ threadId }),
+      body: JSON.stringify({ parentId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
     if (!res.ok) {

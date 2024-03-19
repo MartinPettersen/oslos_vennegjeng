@@ -15,10 +15,10 @@ export async function POST(req: any) {
             return NextResponse.json({ message: "Mangler informasjon" }, { status: 400 })
         }
 
-        const existingThread = await Thread.findOne({ id: postData.threadId }).lean().exec() as any as ThreadT;
+        const existingThread = await Thread.findOne({ id: postData.parentId }).lean().exec() as any as ThreadT;
 
         await Post.create(postData)
-        await Thread.findOneAndUpdate({ id: postData.threadId }, { replies: [postData.postId, ...existingThread!.replies] })
+        await Thread.findOneAndUpdate({ id: postData.parentId }, { replies: [postData.postId, ...existingThread!.replies] })
 
         return NextResponse.json({ message: "Kommentar opprettet" }, { status: 201 })
 

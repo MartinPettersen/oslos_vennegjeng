@@ -49,10 +49,10 @@ const ReplyDisplay = ({ postId }: Props) => {
   });
 
   const handleDelete = async () => {
-    const threadId = post?.threadId;
+    const parentId = post?.parentId;
     const res = await fetch("/api/DeletePost", {
       method: "POST",
-      body: JSON.stringify({ postId, threadId }),
+      body: JSON.stringify({ postId, parentId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
 

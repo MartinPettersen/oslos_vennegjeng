@@ -4,13 +4,13 @@ import Thread from '@/app/(models)/Thread';
 export async function POST(req: any) {
     try {
         const body = await req.json()
-        const threadId = body.threadId
+        const parentId = body.parentId
 
-        if (!threadId) {
+        if (!parentId) {
             return NextResponse.json({ message: "Mangler Tråd" }, { status: 400 })
         }
 
-        const existingThread = await Thread.findOne({ id: threadId }).lean().exec();
+        const existingThread = await Thread.findOne({ id: parentId }).lean().exec();
 
         return NextResponse.json({ data: existingThread }, { status: 201 })
 

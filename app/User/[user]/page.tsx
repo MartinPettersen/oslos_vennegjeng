@@ -97,7 +97,7 @@ const page = ({ params }: Props) => {
             <div className=" w-full h-full flex flex-col gap-4 items-center justify-center overflow-y-auto no-scrollbar">
               {threads!.map((thread: any) => (
                 <div className="bg-slate-500 hover:bg-slate-400 text-orange-300 flex flex-col p-4 w-[80%] sm:w-[40%]">
-                  <ThreadDisplay threadId={thread.id} />
+                  <ThreadDisplay parentId={thread.id} />
                 </div>
               ))}
             </div>

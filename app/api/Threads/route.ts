@@ -9,9 +9,9 @@ export async function POST(req: any) {
         const body = await req.json()
         const formData = body.form
         const forumLabel = body.forumLabel
-        const threadId = body.id
+        const parentId = body.id
 
-        if (!forumLabel || !threadId) {
+        if (!forumLabel || !parentId) {
             return NextResponse.json({ message: "Mangler informasjon" }, { status: 400 })
         }
 

@@ -37,10 +37,10 @@ const ReportCard = ({ report }: Props) => {
   };
 
   const getThread = async (report: Report) => {
-    const threadId = report.subjectId;
+    const parentId = report.subjectId;
     const res = await fetch("/api/GetThread", {
       method: "POST",
-      body: JSON.stringify({ threadId }),
+      body: JSON.stringify({ parentId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
     if (!res.ok) {
@@ -82,11 +82,11 @@ const ReportCard = ({ report }: Props) => {
   };
 
   const deletePost = async (report: Report, post: Post) => {
-    const threadId = post!.threadId;
+    const parentId = post!.parentId;
     const postId = post!.postId;
     const res = await fetch("/api/DeletePost", {
       method: "POST",
-      body: JSON.stringify({ postId, threadId }),
+      body: JSON.stringify({ postId, parentId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
 

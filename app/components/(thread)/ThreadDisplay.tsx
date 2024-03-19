@@ -4,17 +4,17 @@ import React, { useEffect, useState } from "react";
 import TimeStamp from "./TimeStamp";
 
 type Props = {
-  threadId: String;
+  parentId: String;
 };
 
-const ThreadDisplay = ({ threadId }: Props) => {
+const ThreadDisplay = ({ parentId }: Props) => {
   const [thread, setThread] = useState<Thread>();
   const [winReady, setwinReady] = useState(false);
 
   const getThread = async () => {
     const res = await fetch("/api/GetThread", {
       method: "POST",
-      body: JSON.stringify({ threadId }),
+      body: JSON.stringify({ parentId }),
       headers: new Headers({ "content-type": "application/json" }),
     });
     if (!res.ok) {
@@ -35,7 +35,7 @@ const ThreadDisplay = ({ threadId }: Props) => {
     <div>
       {winReady ? (
         <Link
-          href={`../../Thread/${threadId}`}
+          href={`../../Thread/${parentId}`}
           className="flex flex-col text-orange-300 "
         >
           <h2 className="font-bold text-xl">{thread!.headline}</h2>
