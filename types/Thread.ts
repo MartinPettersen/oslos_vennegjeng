@@ -7,6 +7,8 @@ export type Thread = {
     content: String,
     forumLabel: String,
     replies: String[],
+    createdAt: String,
+    updatedAt: String,
 }
 
 export type ThreadT = {
@@ -16,4 +18,6 @@ export type ThreadT = {
     content: String,
     forumLabel: String,
     replies: String[],
+    createdAt: String,
+    updatedAt: String,
 }
