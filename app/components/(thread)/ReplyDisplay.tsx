@@ -21,7 +21,6 @@ const ReplyDisplay = ({ postId }: Props) => {
   const [winReady, setwinReady] = useState(false);
   const [toggle, setToggle] = useState(false);
 
-
   const getPost = async () => {
     const res = await fetch("/api/GetPost", {
       method: "POST",
@@ -69,11 +68,11 @@ const ReplyDisplay = ({ postId }: Props) => {
         <UserNameLink userName={post?.userName} />
 
         <div className=" flex gap-2">
-          {winReady ?
-          
-          <ReportForm subjectType="post" subjectId={post!.postId}/>
-          : <></>
-        }
+          {winReady ? (
+            <ReportForm subjectType="post" subjectId={post!.postId} />
+          ) : (
+            <></>
+          )}
           {session?.user?.name === post?.userName ? (
             <>
               <PencilIcon
@@ -98,7 +97,8 @@ const ReplyDisplay = ({ postId }: Props) => {
       </div>
       <div className="flex justify-between">
         <PostShare postId={postId} />
-        <TimeStamp time={post!.createdAt} />
+        {winReady ? (
+        <TimeStamp time={post!.createdAt} /> ) : <></>}
       </div>
     </div>
   );

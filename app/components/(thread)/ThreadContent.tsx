@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import EditThread from "./EditThread";
 import UserNameLink from "./UserNameLink";
 import ReportForm from "./ReportForm";
+import TimeStamp from "./TimeStamp";
 
 type Props = {
   thread: Thread;
@@ -51,9 +52,12 @@ const ThreadContent = ({ thread }: Props) => {
       <div className="flex justify-between items-center text-orange-300 ">
         <h1 className="font-bold text-xl ">{thread!.headline}</h1>
         <div className=" flex gap-2">
-          <div className="">{thread!.replies.length}</div>
           {winReady ? (
-            <ReportForm subjectType="thread" subjectId={thread!.id} />
+            <div className="flex gap-1">
+              <div className="">{thread!.replies.length}</div>
+              <TimeStamp time={thread!.createdAt} />
+              <ReportForm subjectType="thread" subjectId={thread!.id} />
+            </div>
           ) : (
             <></>
           )}
