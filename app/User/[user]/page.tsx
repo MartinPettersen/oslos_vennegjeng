@@ -1,6 +1,7 @@
 "use client";
 import Reply from "@/app/components/(thread)/Reply";
 import ReplyDisplay from "@/app/components/(thread)/ReplyDisplay";
+import ReportForm from "@/app/components/(thread)/ReportForm";
 import ThreadContent from "@/app/components/(thread)/ThreadContent";
 import ThreadDisplay from "@/app/components/(thread)/ThreadDisplay";
 import { Post } from "@/types/Post";
@@ -63,6 +64,13 @@ const page = ({ params }: Props) => {
   return (
     <div className="flex justify-center flex-col gap-4 sm:gap-10 w-screen items-center p-4">
       <div className="bg-slate-500  p-4 w-full sm:w-[60%] flex">
+      <div className="z-1 fixed ">
+      {winReady ? (
+              <ReportForm subjectType="user" subjectId={userName} />
+            ) : (
+              <></>
+            )}
+      </div>
         <div className="w-full flex flex-col gap-2 sm:gap-4 sm:p-4 ">
           <h1 className="text-orange-300 font-bold text-4xl flex items-center justify-center ">
             {userName.replace("%20", " ")}
