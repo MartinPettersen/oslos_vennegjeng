@@ -20,22 +20,39 @@ const CreateUserForm = () => {
     }));
   };
 
+  const nameCheck = () => {
+    const reservedNames = ["admin", "deleted"];
+
+    let okName = true
+
+    reservedNames.map((name) => {
+      if (form.name.toLowerCase() === name) {
+        setErrorMessage("Ugyldig navn");
+        okName = false
+      }
+    });
+
+    return okName;
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setErrorMessage("");
 
-    const res = await fetch("/api/Users", {
-      method: "POST",
-      body: JSON.stringify({ form }),
-      headers: new Headers({ "content-type": "application/json" }),
-    });
+    if (nameCheck()) {
+      const res = await fetch("/api/Users", {
+        method: "POST",
+        body: JSON.stringify({ form }),
+        headers: new Headers({ "content-type": "application/json" }),
+      });
 
-    if (!res.ok) {
-      const response = await res.json();
-      setErrorMessage(response.message);
-    } else {
-      router.refresh();
-      router.push("/");
+      if (!res.ok) {
+        const response = await res.json();
+        setErrorMessage(response.message);
+      } else {
+        router.refresh();
+        router.push("/");
+      }
     }
   };
 
