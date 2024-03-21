@@ -6,6 +6,7 @@ import { EyeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { Post } from "@/types/Post";
 import { Thread } from "@/types/Thread";
+import { User } from "@/types/User";''
 
 type Props = {
   report: Report;
@@ -17,6 +18,7 @@ const ReportCard = ({ report }: Props) => {
 
   const [post, setPost] = useState<Post>();
   const [thread, setThread] = useState<Post>();
+  const [user, setUser] = useState<Post>();
 
   const getPost = async (report: Report) => {
     const postId = report.subjectId;
@@ -54,15 +56,36 @@ const ReportCard = ({ report }: Props) => {
   };
 
 
+  const getUser = async (report: Report) => {
+    const userName = report.subjectId;
+    const res = await fetch("/api/GetUser", {
+      method: "POST",
+      body: JSON.stringify({ userName }),
+      headers: new Headers({ "content-type": "application/json" }),
+    });
+    if (!res.ok) {
+      const response = await res.json();
+      console.log(response.message);
+    } else {
+      const temp = await res.json();
+      setUser(temp.data);
+      deleteUser(report, temp.data);
+    }
+  };
+
   const handleDelete = async (report: Report) => {
     setToggleDelete(false);
+    console.log('kom til handleDelete')
+    console.log(report.subjectType)
     if (report.subjectType === "post") {
       getPost(report);
-    } else {
+    } else if (report.subjectType === "thread") {
       console.log("its a thread");
-
       getThread(report);
-      //
+    } else if (report.subjectType === "user") {
+      console.log("its a user");
+
+      getUser(report);
     }
   };
 
@@ -93,6 +116,20 @@ const ReportCard = ({ report }: Props) => {
     if (!res.ok) {
       const response = await res.json();
       console.log(response);
+    } else {
+      deleteReport(report);
+    }
+  };
+
+  const deleteUser = async (report: Report, user: User) => {
+    const userName = user.name
+    const res = await fetch("/api/DeleteUser", {
+      method: "POST",
+      body: JSON.stringify({ userName }),
+      headers: new Headers({ "content-type": "application/json" }),
+    });
+    if (!res.ok) {
+      const response = await res.json();
     } else {
       deleteReport(report);
     }
