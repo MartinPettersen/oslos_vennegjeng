@@ -64,7 +64,7 @@ const page = ({ params }: Props) => {
   return (
     <div className="flex justify-center flex-col gap-4 sm:gap-10 w-screen items-center p-4">
       <div className="bg-slate-500  p-4 w-full sm:w-[60%] flex">
-      <div className="z-1 fixed ">
+      <div className="z-1 static">
       {winReady ? (
               <ReportForm subjectType="user" subjectId={userName} />
             ) : (
